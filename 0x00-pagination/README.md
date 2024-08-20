@@ -41,3 +41,19 @@ Let's break down the `get_hyper` method:
    - `next_page`: the number of the next page, or `None` if this is the last page
    - `prev_page`: the number of the previous page, or `None` if this is the first page
    - `total_pages`: the total number of pages in the dataset
+
+## Task 3
+
+To implement the `get_hyper_index` method in the `Server` class, we need to ensure that the method returns a dictionary containing the current index, next index, page size, and the actual page of the dataset. Additionally, we need to handle cases where rows are removed from the dataset between queries, ensuring that users do not miss items when changing pages.
+
+Here's how I plan to approach implementing the `get_hyper_index` method:
+
+1. **Validate the Index**: First, we'll check if the provided index is valid. If the index is `None`, we'll default to starting from the beginning of the dataset. We'll also ensure that the index does not exceed the length of the dataset.
+
+2. **Handle Data Removal**: To handle cases where rows are removed between queries, we'll iterate through the dataset starting from the requested index until we collect enough items to fill a page. This ensures that even if some rows are missing, we still return a full page of data.
+
+3. **Calculate Next Index**: After collecting the data for the current page, the next index will simply be the index of the item following the last item returned in the current page.
+
+4. **Return Data**: Finally, we'll package the current index, next index, page size, and the collected data into a dictionary and return it.
+
+This implementation ensures that even if rows are removed from the dataset between queries, the pagination remains consistent and users do not miss items when changing pages. The method validates the index, handles data removal gracefully, calculates the next index correctly, and returns the required dictionary with the current page's data.
