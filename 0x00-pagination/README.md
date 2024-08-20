@@ -12,3 +12,14 @@ The function does the following:
 The function uses type hints to indicate that it takes two integers as input and returns a tuple.
 
 ## Task 1
+
+Let's break down the `get_page` method:
+
+1. We use `assert` statements to verify that both `page` and `page_size` are integers greater than 0. If these conditions are not met, an `AssertionError` will be raised.
+
+2. We get the dataset using the `dataset()` method.
+
+3. We use a try-except block to handle cases where the requested page is out of range:
+   - We call `index_range(page, page_size)` to get the start and end indices.
+   - We return the slice of the dataset from start to end.
+   - If an `IndexError` occurs (which would happen if the start index is beyond the end of the dataset), we catch it and return an empty list.
