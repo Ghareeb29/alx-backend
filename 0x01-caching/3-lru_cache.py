@@ -12,7 +12,8 @@ class LRUCache(BaseCaching):
 
     def put(self, key, item):
         """
-        Adds an item to the cache with the given key, replacing the existing value if it already exists.
+        Adds an item to the cache with the given key,
+        replacing the existing value if it already exists.
 
         Args:
             key (Any): The key to associate the item with.
@@ -22,7 +23,8 @@ class LRUCache(BaseCaching):
             None
 
         Prints:
-            - "DISCARD: {last}" if the cache is full and an item needs to be discarded to make space for the new item.
+            - "DISCARD: {last}" if the cache is full and
+            an item needs to be discarded to make space for the new item.
         """
         if key is not None and item is not None:
             self.cache_data[key] = item
@@ -39,7 +41,8 @@ class LRUCache(BaseCaching):
             key (Any): The key used to identify the item in the cache.
 
         Returns:
-            Any or None: The item associated with the key if it exists in the cache, otherwise None.
+            Any or None: The item associated with the key
+            if it exists in the cache, otherwise None.
         """
         if key is not None and key in self.cache_data:
             return self.cache_data[key]
