@@ -1,51 +1,37 @@
 #!/usr/bin/python3
-"""LIFO caching module"""
+""" LIFOCache module
+"""
 
-from collections import OrderedDict
 from base_caching import BaseCaching
 
 
 class LIFOCache(BaseCaching):
-    """LIFO Cache class"""
+    """LIFOCache defines:
+    - caching system inherit from BaseCaching
+    - uses LIFO algorithm for cache replacement
+    """
 
     def __init__(self):
+        """Initialize LIFOCache"""
         super().__init__()
-        self.cache_data = OrderedDict()
+        self.order = []
 
     def put(self, key, item):
-        """
-        Adds an item to the cache with the given key,
-        replacing the existing value if it already exists.
-
-        Args:
-            key (Any): The key to associate the item with.
-            item (Any): The item to store in the cache.
-
-        Returns:
-            None
-
-        Prints:
-            - "DISCARD: {Discarded}" if the cache is full and
-            an item needs to be discarded to make space for the new item.
-        """
+        """Add an item in the cache"""
         if key is not None and item is not None:
-            if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-                Discarded = next(reversed(self.cache_data))
-                del self.cache_data[Discarded]
-                print("DISCARD: {}".format(Discarded))
+            if len(self.cache_data) >= self.MAX_ITEMS:
+                if key not in self.cache_data:
+                    discarded = self.order.pop()
+                    del self.cache_data[discarded]
+                    print(f"DISCARD: {discarded}")
+                else:
+                    self.order.remove(key)
+
             self.cache_data[key] = item
+            self.order.append(key)
 
     def get(self, key):
-        """
-        Retrieves an item from the cache based on the provided key.
-
-        Args:
-            key (Any): The key used to identify the item in the cache.
-
-        Returns:
-            Any or None: The item associated with the key
-            if it exists in the cache, otherwise None.
-        """
-        if key is not None:
-            return self.cache_data.get(key)
+        """Get an item by key"""
+        if key is not None and key in self.cache_data:
+            return self.cache_data[key]
         return None

@@ -1,49 +1,36 @@
 #!/usr/bin/python3
-"""MRU caching module"""
+""" MRUCache module
+"""
 
 from base_caching import BaseCaching
+from collections import OrderedDict
 
 
 class MRUCache(BaseCaching):
-    """MRU Cache class"""
+    """MRUCache defines:
+    - caching system inherit from BaseCaching
+    - uses MRU algorithm for cache replacement
+    """
 
     def __init__(self):
+        """Initialize MRUCache"""
         super().__init__()
+        self.cache_data = OrderedDict()
 
     def put(self, key, item):
-        """
-        Adds an item to the cache with the given key,
-        replacing the existing value if it already exists.
-
-        Args:
-            key (Any): The key to associate the item with.
-            item (Any): The item to store in the cache.
-
-        Returns:
-            None
-
-        Prints:
-            - "DISCARD: {last}" if the cache is full and
-            an item needs to be discarded to make space for the new item.
-        """
+        """Add an item in the cache"""
         if key is not None and item is not None:
+            if key in self.cache_data:
+                self.cache_data.move_to_end(key)
+            elif len(self.cache_data) >= self.MAX_ITEMS:
+                discarded = self.cache_data.popitem()
+                print(f"DISCARD: {discarded[0]}")
             self.cache_data[key] = item
-            if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-                MRU = next(reversed(self.cache_data))
-                del self.cache_data[MRU]
-                print("DISCARD: {}".format(MRU))
+            self.cache_data.move_to_end(key)
 
     def get(self, key):
-        """
-        Retrieves an item from the cache based on the provided key.
-
-        Args:
-            key (Any): The key used to identify the item in the cache.
-
-        Returns:
-            Any or None: The item associated with the key
-            if it exists in the cache, otherwise None.
-        """
+        """Get an item by key"""
         if key is not None and key in self.cache_data:
+            self.cache_data.move_to_end(key)
             return self.cache_data[key]
         return None
