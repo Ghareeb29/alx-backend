@@ -12,38 +12,41 @@ class LIFOCache(BaseCaching):
 
     def put(self, key, item):
         """
-        Adds an item to the cache with the given key,
-        replacing the existing value if it already exists.
+        Add an item to the cache using LIFO algorithm.
+
+        If the cache is at capacity, remove the most recently added item
+        before adding the new item. If key or item is None, this method
+        should not do anything.
 
         Args:
-            key (Any): The key to associate the item with.
-            item (Any): The item to store in the cache.
-
-        Returns:
-            None
-
-        Prints:
-            - "DISCARD: {last}" if the cache is full and
-            an item needs to be discarded to make space for the new item.
+        key: The key to store the item under.
+        item: The item to be stored in the cache.
         """
-        if key is not None and item is not None:
-            self.cache_data[key] = item
-            if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-                Last = next(reversed(self.cache_data))
-                del self.cache_data[Last]
-                print("DISCARD: {}".format(Last))
+        if key is None or item is None:
+            return
+
+        if len(self.cache_data) >= self.MAX_ITEMS:
+            if key not in self.cache_data:
+                discarded = self.order.pop()
+                del self.cache_data[discarded]
+                print(f"DISCARD: {discarded}")
+
+        if key in self.cache_data:
+            self.order.remove(key)
+
+        self.order.append(key)
+        self.cache_data[key] = item
 
     def get(self, key):
         """
-        Retrieves an item from the cache based on the provided key.
+        Retrieve an item from the cache.
 
         Args:
-            key (Any): The key used to identify the item in the cache.
+        key: The key of the item to retrieve.
 
         Returns:
-            Any or None: The item associated with the key
-            if it exists in the cache, otherwise None.
+        The value associated with the key if it exists, None otherwise.
         """
-        if key is not None:
-            return self.cache_data.get(key)
-        return None
+        if key is None or key not in self.cache_data:
+            return None
+        return self.cache_data[key]
