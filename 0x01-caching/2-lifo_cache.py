@@ -29,11 +29,11 @@ class LIFOCache(BaseCaching):
             an item needs to be discarded to make space for the new item.
         """
         if key is not None and item is not None:
-            self.cache_data[key] = item
             if len(self.cache_data) > BaseCaching.MAX_ITEMS:
                 Discarded = next(reversed(self.cache_data))
                 del self.cache_data[Discarded]
                 print("DISCARD: {}".format(Discarded))
+            self.cache_data[key] = item
 
     def get(self, key):
         """
