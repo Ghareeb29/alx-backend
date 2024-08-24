@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """LIFO caching module"""
 
+from collections import OrderedDict
 from base_caching import BaseCaching
 
 
@@ -9,6 +10,7 @@ class LIFOCache(BaseCaching):
 
     def __init__(self):
         super().__init__()
+        self.cache_data = OrderedDict()
 
     def put(self, key, item):
         """
