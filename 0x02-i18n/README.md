@@ -1,8 +1,6 @@
 # 0x02-i18n
 
-## Task 0
-
-### Simple Flask Web Application
+## Simple Flask Web Application
 
 This project is a basic Flask web application that displays a "Hello world" message.
 
@@ -26,7 +24,7 @@ python3 0-app.py
 
 The application will be accessible at `http://localhost:5000`.
 
-## Task 1
+---
 
 ### Flask Babel Setup
 
@@ -76,9 +74,9 @@ The application will be accessible at `http://localhost:5000`.
 - Add translations for supported languages
 - Create language-specific templates
 
-## Task 2
+---
 
-### Flask-Babel Locale Selector
+## Flask-Babel Locale Selector
 
 This project demonstrates how to implement a locale selector in a Flask application using Flask-Babel.
 
@@ -97,13 +95,13 @@ This project demonstrates how to implement a locale selector in a Flask applicat
 
 1. Install required packages:
 
-   ```
+   ```bash
    pip3 install Flask==2.0.1 flask_babel==2.0.0
    ```
 
 2. Run the application:
 
-   ```
+   ```bash
    python3 2-app.py
    ```
 
@@ -128,3 +126,57 @@ The application automatically selects the best matching language based on the cl
 - GitHub repository: `alx-backend`
 - Directory: `0x02-i18n`
 - Files: `2-app.py`, `templates/2-index.html`
+
+---
+
+## Flask-Babel Internationalization (i18n)
+
+This project demonstrates how to implement internationalization in a Flask application using Flask-Babel.
+
+### Files
+
+- `3-app.py`: Main Flask application with Babel configuration and i18n support.
+- `babel.cfg`: Babel configuration file for extraction.
+- `templates/3-index.html`: HTML template with translatable strings.
+- `translations/en/LC_MESSAGES/messages.po`: English translations.
+- `translations/fr/LC_MESSAGES/messages.po`: French translations.
+- `translations/en/LC_MESSAGES/messages.mo`: Compiled English translations.
+- `translations/fr/LC_MESSAGES/messages.mo`: Compiled French translations.
+
+### Setup and Usage
+
+1. Install required packages:
+   ```bash
+   pip install Flask flask-babel
+   ```
+
+2. Run the extraction command:
+   ```bash
+   pybabel extract -F babel.cfg -o messages.pot .
+   ```
+
+3. Initialize translations:
+   ```bash
+   pybabel init -i messages.pot -d translations -l en
+   pybabel init -i messages.pot -d translations -l fr
+   ```
+
+4. Edit the `.po` files in `translations/[en|fr]/LC_MESSAGES/` to provide translations.
+
+5. Compile translations:
+   ```bash
+   pybabel compile -d translations
+   ```
+
+6. Run the application:
+   ```bash
+   python3 3-app.py
+   ```
+
+The application will display messages in English or French based on the user's browser language settings.
+
+## Repository Information
+
+- GitHub repository: `alx-backend`
+- Directory: `0x02-i18n`
+- Files: `3-app.py`, `babel.cfg`, `templates/3-index.html`, `translations/en/LC_MESSAGES/messages.po`, `translations/fr/LC_MESSAGES/messages.po`, `translations/en/LC_MESSAGES/messages.mo`, `translations/fr/LC_MESSAGES/messages.mo`
