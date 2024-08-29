@@ -146,16 +146,19 @@ This project demonstrates how to implement internationalization in a Flask appli
 ### Setup and Usage
 
 1. Install required packages:
+
    ```bash
    pip install Flask flask-babel
    ```
 
 2. Run the extraction command:
+
    ```bash
    pybabel extract -F babel.cfg -o messages.pot .
    ```
 
 3. Initialize translations:
+
    ```bash
    pybabel init -i messages.pot -d translations -l en
    pybabel init -i messages.pot -d translations -l fr
@@ -164,11 +167,13 @@ This project demonstrates how to implement internationalization in a Flask appli
 4. Edit the `.po` files in `translations/[en|fr]/LC_MESSAGES/` to provide translations.
 
 5. Compile translations:
+
    ```bash
    pybabel compile -d translations
    ```
 
 6. Run the application:
+
    ```bash
    python3 3-app.py
    ```
@@ -180,3 +185,66 @@ The application will display messages in English or French based on the user's b
 - GitHub repository: `alx-backend`
 - Directory: `0x02-i18n`
 - Files: `3-app.py`, `babel.cfg`, `templates/3-index.html`, `translations/en/LC_MESSAGES/messages.po`, `translations/fr/LC_MESSAGES/messages.po`, `translations/en/LC_MESSAGES/messages.mo`, `translations/fr/LC_MESSAGES/messages.mo`
+
+---
+
+## Flask Internationalization (i18n) Task
+
+### Overview
+
+This project demonstrates how to implement internationalization in a Flask application using Flask-Babel. It includes functionality to force a particular locale by passing a `locale` parameter in the URL.
+
+### Files
+
+- `4-app.py`: Main Flask application file
+- `templates/4-index.html`: HTML template for the index page
+- `babel.cfg`: Babel configuration file
+- `translations/`: Directory containing translation files
+
+### Setup and Running
+
+1. Ensure you have Python 3.7+ installed.
+2. Install required packages:
+
+   ```
+   pip install Flask==3.0.0 Flask-Babel==4.0.0
+   ```
+
+3. Set up translations:
+
+   ```
+   pybabel extract -F babel.cfg -o messages.pot .
+   pybabel init -i messages.pot -d translations -l en
+   pybabel init -i messages.pot -d translations -l fr
+   ```
+
+4. Edit the `.po` files in `translations/en/LC_MESSAGES/messages.po` and `translations/fr/LC_MESSAGES/messages.po` to add your translations.
+5. Compile translations:
+
+   ```
+   pybabel compile -d translations
+   ```
+
+6. Run the application:
+
+   ```
+   python3 4-app.py
+   ```
+
+### Usage
+
+- Access the application at `http://127.0.0.1:5000`
+- To force a specific locale, use the `locale` parameter in the URL:
+  - English: `http://127.0.0.1:5000?locale=en`
+  - French: `http://127.0.0.1:5000?locale=fr`
+
+### Requirements
+
+- All files interpreted/compiled on Ubuntu 18.04 LTS using Python 3.7
+- Code follows pycodestyle style (version 2.5)
+- All Python files are executable
+- All modules, classes, and functions have documentation
+
+### Note
+
+This project uses Flask 3.0 and Flask-Babel 4.0. Ensure compatibility when making changes or updates.
