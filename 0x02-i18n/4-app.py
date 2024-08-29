@@ -10,6 +10,7 @@ class Config:
     """
     Configuration class for Flask app
     """
+
     LANGUAGES = ["en", "fr"]
     BABEL_DEFAULT_LOCALE = "en"
     BABEL_DEFAULT_TIMEZONE = "UTC"
@@ -24,19 +25,21 @@ def get_locale() -> str:
     """
     Determine the best match for supported languages
     """
-    locale = request.args.get('locale')
-    if locale and locale in app.config['LANGUAGES']:
+    locale = request.args.get("locale")
+    if locale and locale in app.config["LANGUAGES"]:
         return locale
-    return request.accept_languages.best_match(app.config['LANGUAGES'])
+    return request.accept_languages.best_match(app.config["LANGUAGES"])
+
 
 babel.init_app(app, locale_selector=get_locale)
 
-@app.route('/', strict_slashes=False)
+
+@app.route("/", strict_slashes=False)
 def index() -> str:
     """
     Render the index page
     """
-    return render_template('4-index.html')
+    return render_template("4-index.html")
 
 
 if __name__ == "__main__":
